@@ -1,25 +1,33 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;               //compiler version must be greater than 8
+//line specifies the software license under which the contract is distributed.
+// Here, it is the MIT license, which is a permissive free software license.
 
-contract modulefirst {               //creating the smart contract
-    int256 public number;            //declaring a variable named number with datatype int256
+pragma solidity ^0.8.0; //Solidity compiler version must be greater than 8
 
-    //Used to check for conditions that must be met before executing further code. 
-    //It helps in validating inputs and access control
-    function setNumber(int256 _inputNum) public {
+contract modulefirst {               //creating the smart contract,In Solidity, 
+                                    //contracts are similar to classes in object-oriented programming.
+    int256 public number;           //declaring a variable named number with datatype int256
+
+    //public keyword makes the variable accessible from outside the contract
+    function assignNum(int256 _inputNum) public {
+         //require keyword is used to check for conditions that must be met before executing further code. 
+        //if not conditions not met it will revert,it helps in validating inputs and access control    
         require(_inputNum != 0, "Number cannot be zero, should be greater than that");
         require(_inputNum > 0, "Number must be positive");
-
+        //If both require conditions are met, this line assigns the value of _inputNum to the state variable number.
         number = _inputNum;
     }
 
     // function uses assert generally used for internal error checking and invariants.
+    //pure used, indicating it does not read or modify state variables.
     function assertExample(uint input_1, uint input_2) public pure returns (bool) {
         uint a = input_1;
         uint b = input_2;
 
         //checking if x equals y, if equals prints true. If not, the transaction will revert.
         assert(a == b);
+
+        //If the assert condition is true, the function returns true.
         return true;
     }
 
@@ -32,3 +40,5 @@ contract modulefirst {               //creating the smart contract
         return true;
     }
 }
+// this contract demonstrates basic usage of state variables and functions in Solidity, 
+//along with examples of require, assert, and revert for error handling and input validation.
