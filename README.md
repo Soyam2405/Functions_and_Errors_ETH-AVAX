@@ -10,8 +10,9 @@ Here I have created smart contract named modulefirst which is demonstrating the 
 For executing the code i have used remix ide [https://remix.ethereum.org/].
 ![image](https://github.com/Surbhi268/Eth-Avax-intermediate1/assets/138808811/1a10f333-7621-4c49-9627-b8024e22d60b)
 ### Code Explanation
-The `ModuleFirst` Solidity contract employs `require`, `assert`, and `revert` for error handling and input validation. `setNumber` validates non-zero and positive inputs, `assertExample` checks equality, and `revertExample` explicitly reverts transactions based on conditions. These mechanisms enhance contract robustness by enforcing preconditions and ensuring expected behavior, critical for secure smart contract development.
-![image](https://github.com/Soyam2405/Functions_and_Errors_ETH-AVAX/assets/120269736/4cc3342a-6f94-4469-a184-1be8110f6fea)
+The `ModuleFirst` Solidity contract employs `require`, `assert`, and `revert` for error handling and input validation. `assignNum` validates non-zero and positive inputs, `assertSample` checks equality, and `revertSample` explicitly reverts transactions based on conditions. These mechanisms enhance contract robustness by enforcing preconditions and ensuring expected behavior, critical for secure smart contract development.
+![image](https://github.com/Soyam2405/Functions_and_Errors_ETH-AVAX/assets/120269736/f78dc35d-655f-4618-848f-ca7099641b48)
+
 
 #### Execution steps on remix ide online
 1. Firstly compile the written code on the remix ide.
