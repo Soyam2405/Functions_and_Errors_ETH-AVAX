@@ -24,7 +24,7 @@ contract modulefirst {               //creating the smart contract,In Solidity,
         uint a = input_1;
         uint b = input_2;
 
-        //checking if x equals y, if equals prints true. If not, the transaction will revert.
+        //checking if a equals b, if equals prints true. If not, the transaction will revert.
         assert(a == b);
 
         //If the assert condition is true, the function returns true.
