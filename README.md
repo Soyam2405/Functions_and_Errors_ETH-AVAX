@@ -1,9 +1,9 @@
 # Functions_and_Errors_ETH-AVAX 
 In this I am creating a smart contract following the guidelines of module 1 of the project requirements.
 Functionality
-Contract successfully uses require()
-Contract successfully uses assert()
-Contract successfully uses revert() statements
+1. Contract successfully uses require()
+2. Contract successfully uses assert()
+3. Contract successfully uses revert() statements
 ## Description
 Here I have created smart contract named modulefirst which is demonstrating the use of require(), assert(), and revert() statements.
 ### Code execution
