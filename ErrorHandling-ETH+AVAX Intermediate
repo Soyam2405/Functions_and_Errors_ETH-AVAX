@@ -1,44 +1,62 @@
 // SPDX-License-Identifier: MIT
-//line specifies the software license under which the contract is distributed.
-// Here, it is the MIT license, which is a permissive free software license.
+pragma solidity ^0.8.0;
 
-pragma solidity ^0.8.0; //Solidity compiler version must be greater than 8
-
-contract modulefirst {               //creating the smart contract,In Solidity, 
-                                    //contracts are similar to classes in object-oriented programming.
-    int256 public number;           //declaring a variable named number with datatype int256
-
-    //public keyword makes the variable accessible from outside the contract
-    function assignNum(int256 _inputNum) public {
-         //require keyword is used to check for conditions that must be met before executing further code. 
-        //if not conditions not met it will revert,it helps in validating inputs and access control    
-        require(_inputNum != 0, "Number cannot be zero, should be greater than that");
-        require(_inputNum > 0, "Number must be positive");
-        //If both require conditions are met, this line assigns the value of _inputNum to the state variable number.
-        number = _inputNum;
+contract LibraryManagement{
+    address public owner;
+    mapping(address => bool) public validMemberships;
+    mapping(uint256 => bool) public availableBooks;
+    mapping(address => uint256) public borrowedBooks;
+    // constructor that sets the owner variable to the address that deploys the contract.
+    constructor() {
+        owner = msg.sender;
     }
-
-    // function uses assert generally used for internal error checking and invariants.
-    //pure used, indicating it does not read or modify state variables.
-    function assertExample(uint input_1, uint input_2) public pure returns (bool) {
-        uint a = input_1;
-        uint b = input_2;
-
-        //checking if a equals b, if equals prints true. If not, the transaction will revert.
-        assert(a == b);
-
-        //If the assert condition is true, the function returns true.
-        return true;
+    //require statement ensures that only the contract owner can execute the functions that use this modifier.
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only contract owner can call this function");
+        _;
     }
+    //a public function registerMember that takes an address as an argument.
+    //Uses the onlyOwner modifier to ensure only the owner can register new members.
+    //Sets the given address's membership status to true in the validMemberships mapping.
+    function registerMember(address member) public onlyOwner {
+        validMemberships[member] = true;
+    }
+    //public function addBook that takes a book ID as an argument.
+    //Sets the given book ID's availability to true in the availableBooks mapping.
+    function addBook(uint256 bookId) public onlyOwner {
+        availableBooks[bookId] = true;
+    }
+    //public function borrowBook that takes a book ID as an argument.    
+    //Sets the book's availability to false (book is borrowed).
+    function borrowBook(uint256 bookId) public {
+        require(validMemberships[msg.sender], "You must have a valid membership to borrow books");
+        require(availableBooks[bookId], "Book is not available");
 
-    //function uses revert to explicitly revert the transaction if the condition is not met.
-    //Explicitly triggers an error and reverts the transaction.
-    function revertExample(uint _inputNumber) public pure returns (bool) {
-        if (_inputNumber < 5) {
-            revert("Number must be greater than or equal to 5");
+        availableBooks[bookId] = false;
+        borrowedBooks[msg.sender] += 1;
+
+        //Uses assert to ensure the book is indeed marked as borrowed
+        assert(!availableBooks[bookId]);
+    }
+    //public function returnBook that takes a book ID as an argument.
+    //Uses require to ensure the caller has borrowed books to return.
+    function returnBook(uint256 bookId) public {
+        require(borrowedBooks[msg.sender] > 0, "You have no borrowed books to return");
+
+        availableBooks[bookId] = true;
+        borrowedBooks[msg.sender] -= 1;
+
+        //Uses assert to ensure the book is indeed marked as available.
+        assert(availableBooks[bookId]);
+    }
+     //ublic function revokePrivileges that takes a member's address as an argument.
+     //Uses the onlyOwner modifier to ensure only the owner can revoke privileges.
+    function revokePrivileges(address member) public onlyOwner {
+        if (borrowedBooks[member] > 0) {
+            //Uses revert to prevent revoking privileges if the member has not returned all borrowed books.
+            revert("Member has not returned all borrowed books");
         }
-        return true;
+
+        validMemberships[member] = false;
     }
 }
-// this contract demonstrates basic usage of state variables and functions in Solidity, 
-//along with examples of require, assert, and revert for error handling and input validation.
