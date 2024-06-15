@@ -2,32 +2,24 @@
 pragma solidity ^0.8.0;
 
 contract LibraryManagement{
+    
     address public owner;
     mapping(address => bool) public validMemberships;
     mapping(uint256 => bool) public availableBooks;
     mapping(address => uint256) public borrowedBooks;
-    // constructor that sets the owner variable to the address that deploys the contract.
     constructor() {
         owner = msg.sender;
     }
-    //require statement ensures that only the contract owner can execute the functions that use this modifier.
     modifier onlyOwner() {
         require(msg.sender == owner, "Only contract owner can call this function");
         _;
     }
-    //a public function registerMember that takes an address as an argument.
-    //Uses the onlyOwner modifier to ensure only the owner can register new members.
-    //Sets the given address's membership status to true in the validMemberships mapping.
-    function registerMember(address member) public onlyOwner {
+     function registerMember(address member) public onlyOwner {
         validMemberships[member] = true;
     }
-    //public function addBook that takes a book ID as an argument.
-    //Sets the given book ID's availability to true in the availableBooks mapping.
     function addBook(uint256 bookId) public onlyOwner {
         availableBooks[bookId] = true;
     }
-    //public function borrowBook that takes a book ID as an argument.    
-    //Sets the book's availability to false (book is borrowed).
     function borrowBook(uint256 bookId) public {
         require(validMemberships[msg.sender], "You must have a valid membership to borrow books");
         require(availableBooks[bookId], "Book is not available");
@@ -35,26 +27,19 @@ contract LibraryManagement{
         availableBooks[bookId] = false;
         borrowedBooks[msg.sender] += 1;
 
-        //Uses assert to ensure the book is indeed marked as borrowed
         assert(!availableBooks[bookId]);
     }
-    //public function returnBook that takes a book ID as an argument.
-    //Uses require to ensure the caller has borrowed books to return.
     function returnBook(uint256 bookId) public {
         require(borrowedBooks[msg.sender] > 0, "You have no borrowed books to return");
 
         availableBooks[bookId] = true;
         borrowedBooks[msg.sender] -= 1;
 
-        //Uses assert to ensure the book is indeed marked as available.
-        assert(availableBooks[bookId]);
+         assert(availableBooks[bookId]);
     }
-     //ublic function revokePrivileges that takes a member's address as an argument.
-     //Uses the onlyOwner modifier to ensure only the owner can revoke privileges.
     function revokePrivileges(address member) public onlyOwner {
         if (borrowedBooks[member] > 0) {
-            //Uses revert to prevent revoking privileges if the member has not returned all borrowed books.
-            revert("Member has not returned all borrowed books");
+           revert("Member has not returned all borrowed books");
         }
 
         validMemberships[member] = false;
