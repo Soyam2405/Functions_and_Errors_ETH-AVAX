@@ -14,7 +14,7 @@ For executing the code i have used remix ide [https://remix.ethereum.org/].
 
 ### Code Explanation
 This Solidity smart contract implements a library system with an owner who can register members and add books. Members with valid memberships can borrow available books, which are tracked using mappings. The `borrowBook` function uses `require` to ensure membership validity and book availability, and `assert` to confirm the book's status change. The `returnBook` function allows members to return books, updating their status and using `assert` to verify availability. The owner can revoke membership privileges if the member has returned all borrowed books, using `revert` to prevent revocation if books are still borrowed.
-![image](https://github.com/Soyam2405/Functions_and_Errors_ETH-AVAX/assets/120269736/6a894b0f-609f-4a79-8367-7d626dcef353)
+![image](https://github.com/Soyam2405/Functions_and_Errors_ETH-AVAX/assets/120269736/34922a7b-9436-4d13-81bb-a4daf012069f)
 #### Execution steps on remix ide online
 1. Firstly compile the written code on the remix ide.
    ![image](https://github.com/Soyam2405/Functions_and_Errors_ETH-AVAX/assets/120269736/8fe941a7-fff6-4da2-915e-9c8243c730a6)
