@@ -3,7 +3,7 @@ In this I am creating a smart contract following the guidelines of module 1 of t
 Functionality
 1. Contract successfully uses require()
 2. Contract successfully uses assert()
-3. Contract successfully uses revert() statements
+3. Contract successfully uses revert() statement
    
 ## Description
 Here I have created smart contract named LibraryManagement which is demonstrating the use of error handlers require(), assert(), and revert() statements.
